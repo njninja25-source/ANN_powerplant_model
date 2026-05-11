@@ -14,11 +14,10 @@ This repository contains an Artificial Neural Network (ANN) built with PyTorch t
 ---
 
 ##  Project Structure
-- `model.py` → Defines the ANN architecture  
-- `train.py` → Training loop
-- `test.py` → evaluation  
-- `requirements.txt` → Dependencies  
+- `model` → Defines the ANN architecture  
+- `train` → Training loop
+- `test` → evaluation    
 - `README.md` → Documentation  
-- `plots/` → Training vs validation loss curves  
+- `plots` → Training vs validation loss curves  
 
 # author - Niranjan J
