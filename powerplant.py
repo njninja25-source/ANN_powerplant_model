@@ -64,7 +64,7 @@ model = ann_model()
 cartirian = nn.MSELoss()
 opt =  ts.optim.Adam(model.parameters())
 
-epochs = 50
+epochs = 100
 train_losses = []
 eval_losses = []
 best_model_para = float("inf")
