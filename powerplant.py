@@ -2,14 +2,18 @@ import pandas as pd
 import torch as ts 
 import torch.nn as nn
 
+# reading file
 df = pd.read_csv("powerplant_data.csv")
 
+# sorting out features and label
 X = df.drop(["PE"] , axis = 1)
 y = df["PE"]
 
+# data split
 from sklearn.model_selection import train_test_split
 X_train , X_test  , y_train , y_test = train_test_split(X , y , test_size=0.2 , random_state= 42)
 
+# standardization
 from sklearn.preprocessing import StandardScaler
 
 ss = StandardScaler()
@@ -66,6 +70,9 @@ eval_losses = []
 best_model_para = float("inf")
 
 for epoch in range(epochs):
+    
+# TRAINING THE MODEL
+    
     model.train()
     runninng_loss = 0.00
     for xa , yb in train_loader:
@@ -78,8 +85,8 @@ for epoch in range(epochs):
         runninng_loss += loss.item()
     epoch_training_losses = (runninng_loss/len(train_loader))
     train_losses.append(epoch_training_losses)
-
-    # validation
+    
+# Validation
     model.eval()
     running_vaL_loss = 0.00
     with ts.no_grad():
@@ -89,13 +96,15 @@ for epoch in range(epochs):
              outputs = model(xa)
              loss = cartirian( outputs , yb)
              running_vaL_loss += loss.item()
-    epoch_val_losses = (running_vaL_loss/len(test_dataset))
+    epoch_val_losses = (running_vaL_loss/len(test_loader))
     eval_losses.append(epoch_val_losses)
+    
     if epoch_val_losses < best_model_para :
         best_model_para = epoch_val_losses
         ts.save(model.state_dict(), "best_model.pt")
     print(f"epoch {epoch} losses ===> training loss {epoch_training_losses} $ val_losses = {epoch_val_losses}")
 
+# plotting 
 import matplotlib.pyplot as plt
 
 loss_df = pd.DataFrame({
